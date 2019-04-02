@@ -34,20 +34,26 @@ class LoginPage extends Component {
               <CardContent className="login-container">
                 <h2>Login Page</h2>
                 <form className="login-form" noValidate autoComplete="off">
-                  <TextField
-                    id="login-email"
-                    label="Email"
-                    type="Email"
-                    margin="normal"
-                    variant="outlined"
-                  />
-                  <TextField
-                    id="login-password"
-                    label="Password"
-                    type="password"
-                    margin="normal"
-                    variant="outlined"
-                  />
+                  <Grid container>
+                    <Grid item xs={12}>
+                      <TextField
+                        id="login-email"
+                        label="Email"
+                        type="Email"
+                        margin="normal"
+                        variant="outlined"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        id="login-password"
+                        label="Password"
+                        type="password"
+                        margin="normal"
+                        variant="outlined"
+                      />
+                    </Grid>
+                  </Grid>
                 </form>
               </CardContent>
               <CardActions>
