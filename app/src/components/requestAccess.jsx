@@ -5,6 +5,8 @@ import {
 import '../styles/requestAccess.css';
 import { subscribe } from 'mqtt-react';
 
+const topic = "requestAccess";
+
 class RequestAccess extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +20,7 @@ class RequestAccess extends Component {
     const message = roomID + ":" + userID + "\n";
     console.log(roomID, userID);
     const { mqtt } = this.props;
-    mqtt.publish('requestAccess', message);
+    mqtt.publish(topic, message);
   }
 
   render() {
@@ -38,5 +40,5 @@ class RequestAccess extends Component {
 }
 
 export default subscribe({
-  topic: 'requsetAccess',
+  topic,
 })(RequestAccess);
