@@ -6,6 +6,7 @@ import Loading from './loading.jsx';
 import '../styles/homepage.css';
 import RequestAccess from './requestAccess.jsx';
 import RemoveAccess from './removeAccess.jsx';
+import MenuAppBar from './header.jsx';
 
 class Homepage extends Component {
   constructor(props) {
@@ -27,6 +28,7 @@ class Homepage extends Component {
     }
     return (
       <div className="background">
+        <MenuAppBar />
         <Grid container>
           <Grid item xs={12}>
             <Card className="homepage-container">
