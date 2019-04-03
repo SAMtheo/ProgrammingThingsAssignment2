@@ -3,7 +3,7 @@ var mqtt = require('mqtt');
 /*
  * Connect to our broker
  */
-var client = mqtt.connect('mqtt://test.mosquitto.org');
+var client = mqtt.connect('100.68.110.18');
 
 /*
  * Topics we're going to be accessing
