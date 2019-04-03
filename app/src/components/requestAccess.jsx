@@ -3,7 +3,7 @@ import {
   Button,
 } from '@material-ui/core';
 import '../styles/requestAccess.css';
-import requestAccess from './../mqtt.js';
+import { subscribe } from 'mqtt-react';
 
 class RequestAccess extends Component {
   constructor(props) {
@@ -15,9 +15,10 @@ class RequestAccess extends Component {
   requestAccessClick() {
     const roomID = this.props.roomNumber;
     const userID = this.props.userNumber;
+    const message = roomID + ":" + userID + "\n";
     console.log(roomID, userID);
-
-    requestAccess(roomID, userID);
+    const { mqtt } = this.props;
+    mqtt.publish('requestAccess', message);
   }
 
   render() {
@@ -36,4 +37,6 @@ class RequestAccess extends Component {
   }
 }
 
-export default RequestAccess;
+export default subscribe({
+  topic: 'requsetAccess',
+})(RequestAccess);
