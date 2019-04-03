@@ -4,6 +4,8 @@ import {
 } from '@material-ui/core';
 import Loading from './loading.jsx';
 import '../styles/homepage.css';
+import RequestAccess from './requestAccess.jsx';
+import RemoveAccess from './removeAccess.jsx';
 
 class Homepage extends Component {
   constructor(props) {
@@ -31,6 +33,8 @@ class Homepage extends Component {
               <Grid containe spacing={8}>
                 <Grid item xs={12}>
                   <h1>Room Access System</h1>
+                  <RequestAccess roomNumber="0001" userNumber="user1" />
+                  <RemoveAccess roomNumber="0001" userNumber="user1" />
                 </Grid>
               </Grid>
             </Card>
