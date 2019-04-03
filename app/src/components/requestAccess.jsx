@@ -3,6 +3,7 @@ import {
   Button,
 } from '@material-ui/core';
 import '../styles/requestAccess.css';
+import requestAccess from './../mqtt.js';
 
 class RequestAccess extends Component {
   constructor(props) {
@@ -15,6 +16,8 @@ class RequestAccess extends Component {
     const roomID = this.props.roomNumber;
     const userID = this.props.userNumber;
     console.log(roomID, userID);
+
+    requestAccess(roomID, userID);
   }
 
   render() {
