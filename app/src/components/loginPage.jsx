@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   Card, CardContent, CardActions, Grid, TextField, Button,
 } from '@material-ui/core';
+import Firebase from 'firebase';
 import '../styles/loginPage.css';
 
 class LoginPage extends Component {
@@ -11,18 +12,26 @@ class LoginPage extends Component {
     this.handleSignup = this.handleSignup.bind(this);
   }
 
-  handleLogin() {
+  async handleLogin() {
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
-    console.log(email, password);
+    await Firebase.auth().signInWithEmailAndPassword(email, password)
+    .catch(error => {
+      console.log(error);
+    });
+    this.props.history.push('/');
   }
 
-  handleSignup() {
+  async handleSignup() {
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
-    console.log(email, password);
+    await Firebase.auth().createUserWithEmailAndPassword(email, password)
+    .catch((error) => {
+      console.log(error);
+    });
+    this.props.history.push('/');
   }
 
   render() {
