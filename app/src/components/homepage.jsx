@@ -6,6 +6,7 @@ import Loading from './loading.jsx';
 import '../styles/homepage.css';
 import RequestAccess from './requestAccess.jsx';
 import RemoveAccess from './removeAccess.jsx';
+import CheckAccessExists from './checkAccessExists.jsx';
 
 class Homepage extends Component {
   constructor(props) {
@@ -30,11 +31,13 @@ class Homepage extends Component {
         <Grid container>
           <Grid item xs={12}>
             <Card className="homepage-container">
-              <Grid containe spacing={8}>
+              <Grid container spacing={8}>
                 <Grid item xs={12}>
                   <h1>Room Access System</h1>
-                  <RequestAccess roomNumber="0001" userNumber="user1" />
-                  <RemoveAccess roomNumber="0001" userNumber="user1" />
+                  <p>dummy data: 80099E1C 0001</p>
+                  <RequestAccess roomNumber="0001" userNumber="80099E1C" />
+                  <RemoveAccess roomNumber="0001" userNumber="80099E1C" />
+                  <CheckAccessExists />
                 </Grid>
               </Grid>
             </Card>
