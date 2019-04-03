@@ -3,6 +3,9 @@ import {
   Button,
 } from '@material-ui/core';
 import '../styles/requestAccess.css';
+import { subscribe } from 'mqtt-react';
+
+const topic = "requestAccess";
 
 class RequestAccess extends Component {
   constructor(props) {
@@ -14,7 +17,10 @@ class RequestAccess extends Component {
   requestAccessClick() {
     const roomID = this.props.roomNumber;
     const userID = this.props.userNumber;
+    const message = roomID + ":" + userID + "\n";
     console.log(roomID, userID);
+    const { mqtt } = this.props;
+    mqtt.publish(topic, message);
   }
 
   render() {
@@ -33,4 +39,6 @@ class RequestAccess extends Component {
   }
 }
 
-export default RequestAccess;
+export default subscribe({
+  topic,
+})(RequestAccess);
