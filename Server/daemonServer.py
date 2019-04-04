@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt # import client
 import Server
+import serial
 
 broker = "localhost"
 port = 9001
@@ -64,5 +65,19 @@ client.connect(broker, port)
 client.loop_start()
 client.subscribe(sub_topic)
 
+
+###############################################
+# Serial
+ser = serial.Serial("/dev/ttyUSB0", 9600)
+ser.flushInput()
+
+
 while 1 :
-    pass
+        res = (str(ser.readline()))
+        # remove EOL chars and 'b('
+        resSplit = res[2:-5].split(":")
+        
+        answer = Server.query(resSplit[0], resSplit[1])
+        ser.write(bytes(answer, 'utf-8'))
+        
+ser.close()
