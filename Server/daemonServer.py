@@ -2,13 +2,21 @@ import paho.mqtt.client as mqtt # import client
 import Server
 import serial
 
+
+# Initial values needed for mqtt connections
 broker = "localhost"
 port = 9001
 sub_topic = "#"
+#
 
+
+
+# Callback for when a topic is subscribed to
 def on_subscribe(client, userdata, mid, granted_qos):
     print("subbed")
 
+
+# Callback for when a message is posted an a subscribed topic
 def on_message(client, userdata, message):
 
     if (str(message.payload.decode('utf-8'))[0] != '#') :
@@ -48,12 +56,18 @@ def on_message(client, userdata, message):
         else : 
             pass
     
+
+# Callback for when a message is published to a subscribed topic by this client
 def on_publish(client, userdata, mid):
     print("data published mid=",mid,"\n")
 
+
+# Callback for when a client disconnects
 def on_disconnect(client,userdata,rc):
     print("client disconnected")
 
+
+# Create the web connection to listen for requests from the frontend
 client= mqtt.Client("Server",transport='websockets')
 client.on_subscribe = on_subscribe
 client.on_publish = on_publish
@@ -64,10 +78,14 @@ print("connecting")
 client.connect(broker, port)
 client.loop_start()
 client.subscribe(sub_topic)
+##
 
 
 ###############################################
 # Serial
+##############################################
+
+# As the callbacks defined above are spun into different thread, the "meat" of the daemon will be an infinite loop of listening for Serial commands over /dev/ttyUSB0
 ser = serial.Serial("/dev/ttyUSB0", 9600)
 ser.flushInput()
 

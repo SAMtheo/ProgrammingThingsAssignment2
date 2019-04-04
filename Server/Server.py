@@ -6,14 +6,14 @@ doorAcc = {
         "0001":[ ("80099E1C", -1) , ("D0BBA61C", -1) ]
         }
 
-
+# Returns a list of all users in a CSV string
 def getAllUsers() :
         res = ""
         for u in users:
                res =  res + u + ","
         return res
                 
-
+# Returns a door ID for a given door
 def findId(door, id) :
         ids = doorAcc.get(door)
         if ids == None :
@@ -22,6 +22,7 @@ def findId(door, id) :
                 f = list(filter(lambda x : id == x[0], doorAcc.get(door)))
                 return list(map(lambda x : x[0], f))
 
+# Returns a userID : time pair for a given user for a given door
 def getPairs(door, id): 
         ids = doorAcc.get(door)
         if ids == None:
@@ -29,6 +30,8 @@ def getPairs(door, id):
         else: 
                 return list(filter(lambda x : id == x[0], doorAcc.get(door)))
 
+
+# Returns a string representing whether a user has access to a door
 def query(door,id) :
     print (id + " for door " + door) 
     ids = findId(door,id)
@@ -38,12 +41,18 @@ def query(door,id) :
     else :
         return(door + ":false")
 
+
+
+# Adds a door to the database
 def addDoor(door) :
     if door in doorAcc.keys() :
         return
     else :
         doorAcc[door] = []
 
+
+
+# Adds a new user to an existing door, giving them access
 def addIDDoor(door, id) :
     ids = findId(door, id) 
     if (id in ids) :
@@ -51,6 +60,9 @@ def addIDDoor(door, id) :
     else :
         doorAcc[door].append((id, -1))
 
+
+
+# Remove an ID from a given door, revoking access
 def removeIDDoor(door,id) :
     ids = getPairs(door,id)
     for i in ids :
@@ -62,17 +74,22 @@ def removeIDDoor(door,id) :
     else:
         return True 
 
+# Return a CSV list of all doors
 def getAllDoorId () :
         doors = ""
         for door in doorAcc:
                 doors = doors + door + ","
         return doors
 
+
+# Check an ID exists within any doors
 def checkID(id) : 
     for door in doorAcc.keys() :
         found = list(filter(lambda x : id == x[0] , doorAcc.get(door)))
     return found
 
+
+# Give access to a user for a fixed period of time
 def addTime(door,id) :
     found = list(filter(lambda x : id == x[0]   , doorAcc.get(door)))
     if found is not None:
@@ -81,6 +98,8 @@ def addTime(door,id) :
         doorAcc[door].append((id, time.time() + 600))
         return True   
 
+
+# Checks whetther a user has a valid amount of time remaining on their access
 def validTime (id) :
     if float(id[1]) < 0.0 :
         return True
@@ -88,9 +107,3 @@ def validTime (id) :
         return True
     return False
 
-def t1() :
-        temp ("0001", "80099E1C")
-
-def temp(door,id) :
-    found = list(filter(lambda x : x[0]==id and validTime(x) , doorAcc.get(door)))
-    print (found)
