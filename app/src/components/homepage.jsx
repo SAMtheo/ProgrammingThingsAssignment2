@@ -9,6 +9,7 @@ import RemoveAccess from './removeAccess.jsx';
 import CheckAccessExists from './checkAccessExists.jsx';
 import DisplayAllRooms from './displayAllRooms.jsx';
 import DisplayAllUsers from './displayAllUsers.jsx';
+import { Connector } from 'mqtt-react';
 
 class Homepage extends Component {
   constructor(props) {
@@ -37,11 +38,21 @@ class Homepage extends Component {
                 <Grid item xs={12}>
                   <h1>Room Access System</h1>
                   <p>dummy data: 80099E1C 0001</p>
-                  <RequestAccess roomNumber="0001" userNumber="80099E1C" />
-                  <RemoveAccess roomNumber="0001" userNumber="80099E1C" />
-                  <CheckAccessExists />
-                  <DisplayAllRooms />
-                  <DisplayAllUsers />
+                  <Connector mqttProps="mqtt://100.68.110.31:9001">
+                    <RequestAccess roomNumber="0001" userNumber="80099E1C" />
+                  </Connector>
+                  <Connector mqttProps="mqtt://100.68.110.31:9001">
+                    <RemoveAccess roomNumber="0001" userNumber="80099E1C" />
+                  </Connector>
+                  <Connector mqttProps="mqtt://100.68.110.31:9001">
+                    <CheckAccessExists />
+                  </Connector>
+                  <Connector mqttProps="mqtt://100.68.110.31:9001">
+                    <DisplayAllRooms />
+                  </Connector>
+                  <Connector mqttProps="mqtt://100.68.110.31:9001">
+                    <DisplayAllUsers />
+                  </Connector>
                 </Grid>
               </Grid>
             </Card>
