@@ -7,33 +7,33 @@ SL018 rfid;
 
 int RXLED = 17;  // The RX LED has a defined Arduino pin
 int servoPos = 0; // current position of the servo
-String IDTag = "0001:";
+String doorID = "0001";
 
 void setup() {
-  Wire.begin();  
-  pinMode(RXLED, OUTPUT);
-  doorServo.attach(10);
-  doorServo.write(servoPos);
+  Wire.begin(); // Begins the wirte module for RFID library
+  pinMode(RXLED, OUTPUT); // Sets the pin for the rx led light
+  doorServo.attach(10); // Attaches the servo to pin 10 for signalling our servo motor
+  doorServo.write(servoPos); // Adjusts the postion of the servo to default before starting
 
-  Serial1.begin(9600);
-  Serial.begin(9600);
+  Serial1.begin(9600); // Opens the serial port for writing to the zigbee
+  Serial.begin(9600); // Opens the serial port for writing debug to the serial console
 }
 
 void loop() {
   Serial.println("Searching for ID tag...");
-  rfid.seekTag(); // Look for tags
+  rfid.seekTag(); // Looks for RFID tags
   while(!rfid.available()) {
     doorClose();
   } // Loop here until tag is found
   
   Serial.println("ID tag found");
-  String result = rfid.getTagString();
-  Serial1.println(IDTag + result);
-  Serial.println(IDTag + result );
+  String result = rfid.getTagString(); // Gets the UID of the RFID tag
+  Serial1.println(doorID + ":" + result);
+  Serial.println(doorID + ":" + result );
 
-  while(!checkLoop());
+  while(!checkLoop()); // Runs in a loop until the server has confirmed the door status
 
-  delay(200);
+  delay(200); // Waits to close the door again
 }
 
 boolean checkLoop() {  
@@ -43,12 +43,12 @@ boolean checkLoop() {
   while(Serial1.available()) {
     String inputString = Serial1.readString();
 
-    if (inputString.equals(IDTag+"true")) {
+    if (inputString.equals(doorID + ":" + "true")) {
       // open door
       doorOpen();
       resolved = true;
     }
-    else if (inputString.equals(IDTag+"false")) {
+    else if (inputString.equals(doorID + ":" + "false")) {
       // don't open door
       Serial.println("Invalid permissions: ID does not have permission to open this door");
       doorClose();
