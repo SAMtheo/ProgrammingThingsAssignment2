@@ -8,6 +8,7 @@ import RequestAccess from './requestAccess.jsx';
 import RemoveAccess from './removeAccess.jsx';
 import CheckAccessExists from './checkAccessExists.jsx';
 import DisplayAllRooms from './displayAllRooms.jsx';
+import DisplayAllUsers from './displayAllUsers.jsx';
 
 class Homepage extends Component {
   constructor(props) {
@@ -40,6 +41,7 @@ class Homepage extends Component {
                   <RemoveAccess roomNumber="0001" userNumber="80099E1C" />
                   <CheckAccessExists />
                   <DisplayAllRooms />
+                  <DisplayAllUsers />
                 </Grid>
               </Grid>
             </Card>
