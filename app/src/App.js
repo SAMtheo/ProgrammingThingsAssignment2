@@ -5,8 +5,6 @@ import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import LoginPage from './components/loginPage.jsx';
 import Homepage from './components/homepage.jsx';
 import Loading from './components/loading.jsx';
-import { readFile } from 'fs';
-import { Connector } from 'mqtt-react';
 
 const theme = createMuiTheme({
   palette: {
@@ -69,26 +67,24 @@ class App extends Component {
       );
     }
     return (
-      <Connector mqttProps="mqtt://100.68.110.18:9001">
-        <Router>
-          <div className="page">
-            <MuiThemeProvider theme={theme}>
-              <Route path='/login' component={LoginPage}/>
-              <Route exact path='/' component={() => {
-                if (this.state.loggedIn) {
-                  return (
-                      <Homepage />
-                  );
-                } else {
-                  return (
-                      <Redirect to='/login' />
-                  );
-                }
-              }}/>
-            </MuiThemeProvider>
-          </div>
-        </Router>
-      </Connector>
+      <Router>
+        <div className="page">
+          <MuiThemeProvider theme={theme}>
+            <Route path='/login' component={LoginPage}/>
+            <Route exact path='/' component={() => {
+              if (this.state.loggedIn) {
+                return (
+                    <Homepage />
+                );
+              } else {
+                return (
+                    <Redirect to='/login' />
+                );
+              }
+            }}/>
+          </MuiThemeProvider>
+        </div>
+      </Router>
     );
   }
 }

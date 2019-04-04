@@ -6,6 +6,11 @@ import Loading from './loading.jsx';
 import '../styles/homepage.css';
 import RequestAccess from './requestAccess.jsx';
 import RemoveAccess from './removeAccess.jsx';
+import CheckAccessExists from './checkAccessExists.jsx';
+import DisplayAllRooms from './displayAllRooms.jsx';
+import DisplayAllUsers from './displayAllUsers.jsx';
+import { Connector } from 'mqtt-react';
+import MenuAppBar from './header.jsx';
 
 class Homepage extends Component {
   constructor(props) {
@@ -27,14 +32,29 @@ class Homepage extends Component {
     }
     return (
       <div className="background">
+        <MenuAppBar />
         <Grid container>
           <Grid item xs={12}>
             <Card className="homepage-container">
-              <Grid containe spacing={8}>
+              <Grid container spacing={8}>
                 <Grid item xs={12}>
                   <h1>Room Access System</h1>
-                  <RequestAccess roomNumber="0001" userNumber="user1" />
-                  <RemoveAccess roomNumber="0001" userNumber="user1" />
+                  <p>dummy data: 80099E1C 0001</p>
+                  <Connector mqttProps="mqtt://100.68.110.31:9001">
+                    <RequestAccess roomNumber="0001" userNumber="80099E1C" />
+                  </Connector>
+                  <Connector mqttProps="mqtt://100.68.110.31:9001">
+                    <RemoveAccess roomNumber="0001" userNumber="80099E1C" />
+                  </Connector>
+                  <Connector mqttProps="mqtt://100.68.110.31:9001">
+                    <CheckAccessExists />
+                  </Connector>
+                  <Connector mqttProps="mqtt://100.68.110.31:9001">
+                    <DisplayAllRooms />
+                  </Connector>
+                  <Connector mqttProps="mqtt://100.68.110.31:9001">
+                    <DisplayAllUsers />
+                  </Connector>
                 </Grid>
               </Grid>
             </Card>

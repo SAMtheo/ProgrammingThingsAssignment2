@@ -2,43 +2,40 @@ import React, { Component } from 'react';
 import {
   Button, TextField
 } from '@material-ui/core';
-import '../styles/requestAccess.css';
 import { subscribe } from 'mqtt-react';
+import '../styles/checkAccessExists.css';
 
-const topic = "requestAccess";
+const topic = "checkAccess";
 
-class RequestAccess extends Component {
+class CheckAccessExists extends Component {
   constructor(props) {
     super(props);
 
-    this.requestAccessClick = this.requestAccessClick.bind(this);
+    this.checkAccessClick = this.checkAccessClick.bind(this);
   }
 
-  async requestAccessClick() {
-    // const roomID = this.props.roomNumber;
-    // const userID = this.props.userNumber;
-    const roomID = document.getElementById('requestAccess-room').value;
-    const userID = document.getElementById('requestAccess-user').value;
+  async checkAccessClick() {
+    const userID = document.getElementById('check-user').value;
+    const roomID = document.getElementById('check-room').value;    
     const message = roomID + ":" + userID;
     const { mqtt } = this.props;
     await mqtt.publish(topic, message);
-    // const response = this.props.data.filter(message => message.includes('#'))[0];
   }
 
   render() {
     return (
-      <div className="requestAccess-container">
-        <h3>Request Access</h3>
+      <div className="check-container">
+        <h3>Check Access</h3>
 
         <form>
           <TextField
-            id="requestAccess-user"
+            id="check-user"
             label="User"
             margin="normal"
             variant="outlined"
           />
           <TextField
-            id="requestAccess-room"
+            id="check-room"
             label="Room"
             margin="normal"
             variant="outlined"
@@ -50,8 +47,8 @@ class RequestAccess extends Component {
 
         <p>{this.props.data}</p>
 
-        <Button onClick={this.requestAccessClick} variant="contained" color="primary">
-          Request Access
+        <Button onClick={this.checkAccessClick} variant="contained" color="primary">
+          Check Access
         </Button>
       </div>
     );
@@ -60,4 +57,4 @@ class RequestAccess extends Component {
 
 export default subscribe({
   topic,
-})(RequestAccess);
+})(CheckAccessExists);
