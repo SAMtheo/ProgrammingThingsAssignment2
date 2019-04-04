@@ -12,6 +12,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Button from '@material-ui/core/Button';
+import Firebase from 'firebase';
 
 const styles = {
     root: {
@@ -44,6 +46,10 @@ class MenuAppBar extends React.Component {
         this.setState({ anchorEl: null });
     };
 
+    logoutClick = () => {
+        Firebase.auth().signOut();
+    };
+
     render() {
         const { classes } = this.props;
         const { auth, anchorEl } = this.state;
@@ -54,6 +60,9 @@ class MenuAppBar extends React.Component {
                 <AppBar position="static">
                     <Toolbar>
                         {/*TODO*/}
+                        <Button onClick={this.logoutClick}>
+                            Log Out
+                        </Button>
                     </Toolbar>
                 </AppBar>
             </div>

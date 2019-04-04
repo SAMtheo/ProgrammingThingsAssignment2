@@ -20,6 +20,7 @@ class LoginPage extends Component {
     .catch(error => {
       console.log(error);
     });
+    
     this.props.history.push('/');
   }
 
@@ -27,10 +28,26 @@ class LoginPage extends Component {
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
-    await Firebase.auth().createUserWithEmailAndPassword(email, password)
+    const { user: { uid } } = await Firebase.auth().createUserWithEmailAndPassword(email, password)
     .catch((error) => {
       console.log(error);
     });
+
+    console.log(uid);
+
+    await Firebase.database().ref('users/' + uid).set(
+      {
+        uid,
+        email,
+        permission: "user",
+      }, (error) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("success!");
+        }
+      });
+
     this.props.history.push('/');
   }
 
