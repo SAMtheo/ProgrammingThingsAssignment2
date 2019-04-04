@@ -1,6 +1,6 @@
 import time
 
-users = [ "8009E1C", "D0BBA61C"]
+users = [ "80099E1C", "D0BBA61C", "90E99E1C", "90BEA01C" ]
 
 doorAcc = { 
         "0001":[ ("80099E1C", -1) , ("D0BBA61C", -1) ]
