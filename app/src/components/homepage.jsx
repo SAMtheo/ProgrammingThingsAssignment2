@@ -10,6 +10,7 @@ import CheckAccessExists from './checkAccessExists.jsx';
 import DisplayAllRooms from './displayAllRooms.jsx';
 import DisplayAllUsers from './displayAllUsers.jsx';
 import { Connector } from 'mqtt-react';
+import MenuAppBar from './header.jsx';
 
 class Homepage extends Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class Homepage extends Component {
     }
     return (
       <div className="background">
+        <MenuAppBar />
         <Grid container>
           <Grid item xs={12}>
             <Card className="homepage-container">
