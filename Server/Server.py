@@ -1,8 +1,17 @@
 import time
 
+users = [ "8009E1C", "D0BBA61C"]
+
 doorAcc = { 
         "0001":[ ("80099E1C", -1) , ("D0BBA61C", -1) ]
         }
+
+def getAllUsers() :
+        res = ""
+        for u in users:
+               res =  res + u + ","
+        return res
+                
 
 def findId(door, id) :
         ids = doorAcc.get(door)

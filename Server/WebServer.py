@@ -41,6 +41,9 @@ def on_message(client, userdata, message):
         elif (topic == "getRooms") : 
                 res = Server.getAllDoorId()
                 client.publish(topic, "#"+res)
+        elif (topic == "getUsers"):
+                res = Server.getAllUsers()
+                client.publish(topic, "#"+res)
         else : 
             pass
     
