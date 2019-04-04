@@ -69,7 +69,7 @@ class App extends Component {
       );
     }
     return (
-      <Connector mqttProps="mqtt://100.68.110.18:9001">
+      <Connector mqttProps="mqtt://100.68.110.31:9001">
         <Router>
           <div className="page">
             <MuiThemeProvider theme={theme}>

@@ -16,6 +16,19 @@ class DisplayAllRooms extends Component {
     this.getTables = this.getTables.bind(this);
   }
 
+  componentWillUpdate(newProps) {
+    if (newProps != this.props) {
+      if (newProps.data != null) {
+        const roomList = newProps.data.filter(message => message.includes('#'));
+        if (roomList.length > 0) {
+          const newRoomList = roomList[0].substr(1).split(',');
+          const updatedRoomList = newRoomList.filter(room => (room != ""));
+          this.setState({ roomList: updatedRoomList });
+        }
+      }
+    }
+  }
+
   async getTables() {
     const { mqtt } = this.props;
     await mqtt.publish(topic, "get");
@@ -46,4 +59,6 @@ class DisplayAllRooms extends Component {
   }
 }
 
-export default DisplayAllRooms;
+export default subscribe({
+  topic,
+})(DisplayAllRooms);
