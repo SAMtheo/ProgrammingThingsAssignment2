@@ -34,7 +34,7 @@ def on_message(client, userdata, message):
                 response = "Are you happy now :rage:"
             client.publish(topic,"#"+response)
 
-        elif (topic == "requestAccess") :
+        elif (topic == "giveAccess") :
             Server.addIDDoor(m[0], m[1])
             res = Server.query(m[0], m[1])
             client.publish(topic, "#"+res)
@@ -53,6 +53,19 @@ def on_message(client, userdata, message):
         elif (topic == "getUsers"):
                 res = Server.getAllUsers()
                 client.publish(topic, "#"+res)
+        elif (topic == "requestNewAccess") :
+                # roomnum:uid:email
+                res = Server.shootEmail(m[0],m[1],m[2])
+                client.publish(topic,"#"+res)
+        elif (topic == "addUser") :
+                res = Server.addUser(m[0])
+                client.publish(topic,"#"+res)
+        elif (topic == "addDoor") :
+                res = Server.addDoor(m[0])
+                client.publish(topic,"#"+res)
+        elif (topic == "getUsersDoor" ) : 
+                res = Server.getUsersDoor(m[0])
+                client.publish(topic,"#"+res)
         else : 
             pass
     
