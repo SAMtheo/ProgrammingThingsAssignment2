@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   TextField, Button
 } from '@material-ui/core';
-import '../styles/requestAccess.css';
+import '../../styles/requestAccess.css';
 import { subscribe } from 'mqtt-react';
 import Firebase from 'firebase';
 

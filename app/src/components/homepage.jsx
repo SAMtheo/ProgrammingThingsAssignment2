@@ -8,9 +8,7 @@ import MenuAppBar from './header.jsx';
 import Firebase from 'firebase';
 import AdminView from './admin/adminView.jsx';
 import RoomAdminView from './roomAdmin/roomAdminView.jsx'
-import AdminView from './adminView.jsx';
-import UserView from './userView.jsx';
-import RoomAdminView from './roomAdminView.jsx'
+import UserView from './user/userView.jsx';
 
 class Homepage extends Component {
   constructor(props) {

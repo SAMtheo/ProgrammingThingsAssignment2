@@ -3,7 +3,7 @@ import {
   Button, TextField
 } from '@material-ui/core';
 import { subscribe } from 'mqtt-react';
-import '../styles/checkAccessExists.css';
+import '../../styles/checkAccessExists.css';
 
 const topic = "checkAccess";
 
