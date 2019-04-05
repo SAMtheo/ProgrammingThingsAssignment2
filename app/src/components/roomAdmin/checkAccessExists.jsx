@@ -3,7 +3,7 @@ import {
   Button, TextField
 } from '@material-ui/core';
 import { subscribe } from 'mqtt-react';
-import '../styles/checkAccessExists.css';
+import '../../styles/checkAccessExists.css';
 
 const topic = "checkAccess";
 
@@ -20,8 +20,8 @@ class CheckAccessExists extends Component {
   }
 
   async checkAccessClick() {
-    const userID = this.props.user.userId;
-    const roomID = document.getElementById('check-room').value;    
+    const userID = document.getElementById('check-user').value;
+    const roomID = this.props.roomNumber;
     const message = roomID + ":" + userID;
     const { mqtt } = this.props;
     await mqtt.publish(topic, message);
@@ -34,12 +34,15 @@ class CheckAccessExists extends Component {
 
         <form>
           <TextField
-            id="check-room"
-            label="Room"
+            id="check-user"
+            label="User"
             margin="normal"
             variant="outlined"
           />
         </form>
+
+        {/* <p>Room ID: {this.props.roomNumber}</p>
+        <p>User ID: {this.props.userNumber}</p> */}
 
         <p>{this.props.data}</p>
 

@@ -3,7 +3,7 @@ import {
   Grid,
 } from '@material-ui/core';
 import { Connector } from 'mqtt-react';
-import DisplayAllRooms from './displayAllRooms.jsx';
+import DisplayAllRooms from '../admin/displayAllRooms.jsx';
 import RequestAccess from './requestAccess.jsx';
 import CheckAccess from './userCheckAccess.jsx';
 

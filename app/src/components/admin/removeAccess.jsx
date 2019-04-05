@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import {
-  Button, TextField
+  Button, TextField,
 } from '@material-ui/core';
-import '../styles/giveAccess.css';
+import '../../styles/removeAccess.css';
 import { subscribe } from 'mqtt-react';
 
-const topic = "giveAccess";
+const topic = "removeAccess"
 
-class GiveAccess extends Component {
+class RemoveAccess extends Component {
   constructor(props) {
     super(props);
 
-    this.giveAccessClick = this.giveAccessClick.bind(this);
+    this.removeAccessClick = this.removeAccessClick.bind(this);
   }
 
   componentWillUnmount() {
@@ -19,28 +19,29 @@ class GiveAccess extends Component {
     mqtt.end(true);
   }
 
-  async giveAccessClick() {
-    const roomID = document.getElementById('giveAccess-room').value;
-    const userID = document.getElementById('giveAccess-user').value;
+  async removeAccessClick() {
+    const userID = document.getElementById('removeAccess-user').value;
+    const roomID = document.getElementById('removeAccess-room').value;
     const message = roomID + ":" + userID;
+
     const { mqtt } = this.props;
     await mqtt.publish(topic, message);
   }
 
   render() {
     return (
-      <div className="giveAccess-container">
-        <h3>Give Access</h3>
+      <div className="removeAccess-container">
+        <h3>Remove Access</h3>
 
         <form>
           <TextField
-            id="giveAccess-user"
+            id="removeAccess-user"
             label="User"
             margin="normal"
             variant="outlined"
           />
           <TextField
-            id="giveAccess-room"
+            id="removeAccess-room"
             label="Room"
             margin="normal"
             variant="outlined"
@@ -49,8 +50,8 @@ class GiveAccess extends Component {
 
         <p>{this.props.data}</p>
 
-        <Button onClick={this.giveAccessClick} variant="contained" color="primary">
-          Request Access
+        <Button onClick={this.removeAccessClick} variant="contained" color="primary">
+          Remove Access
         </Button>
       </div>
     );
@@ -59,4 +60,4 @@ class GiveAccess extends Component {
 
 export default subscribe({
   topic,
-})(GiveAccess);
+})(RemoveAccess);

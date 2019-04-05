@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import {
   Grid, Button,
 } from '@material-ui/core';
-import '../styles/displayAllUsers.css';
+import '../../styles/displayAllRooms.css';
 import { subscribe } from 'mqtt-react';
 
-const topic = "getUsers";
+const topic = "getRooms";
 
-class DispalyAllUsers extends Component {
+class DisplayAllRooms extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userList: [],
+      roomList: [],
     };
-    this.getUsers = this.getUsers.bind(this);
+    this.getTables = this.getTables.bind(this);
   }
 
   componentWillUnmount() {
@@ -24,37 +24,37 @@ class DispalyAllUsers extends Component {
   componentWillUpdate(newProps) {
     if (newProps != this.props) {
       if (newProps.data != null) {
-        const userList = newProps.data.filter(message => message.includes('#'));
-        if (userList.length > 0) {
-          const newUserList = userList[0].substr(1).split(',');
-          const updatedUserList = newUserList.filter(room => (room != ""));
-          this.setState({ userList: updatedUserList });
+        const roomList = newProps.data.filter(message => message.includes('#'));
+        if (roomList.length > 0) {
+          const newRoomList = roomList[0].substr(1).split(',');
+          const updatedRoomList = newRoomList.filter(room => (room != ""));
+          this.setState({ roomList: updatedRoomList });
         }
       }
     }
   }
 
-  async getUsers() {
+  async getTables() {
     const { mqtt } = this.props;
     await mqtt.publish(topic, "get");
   }
 
   render() {
     return (
-      <div className="diaplyAllUsers-container">
-        <h3>List Of Users</h3>
+      <div className="displayRooms-container">
+        <h3>List Of Rooms</h3>
         <Grid container>
           <Grid item xs={12} sm={6}>
             <ul>
-              {this.state.userList.map((user, idx) => (
+              {this.state.roomList.map((room, idx) => (
                 <li key={idx}>
-                  {user}
+                  {room}
                 </li>
               ))}
             </ul>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Button variant="contained" color="primary" onClick={this.getUsers}>
+            <Button variant="contained" color="primary" onClick={this.getTables}>
               Update List
             </Button>
           </Grid>
@@ -66,4 +66,4 @@ class DispalyAllUsers extends Component {
 
 export default subscribe({
   topic,
-})(DispalyAllUsers);
+})(DisplayAllRooms);
