@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import GiveAccess from '../admin/giveAccess.jsx';
-import RemoveAccess from '../admin/removeAccess.jsx';
-import CheckAccessExists from '../admin/checkAccessExists.jsx';
+import GiveAccess from '../roomAdmin/giveAccess.jsx';
+import RemoveAccess from '../roomAdmin/removeAccess.jsx';
+import CheckAccessExists from '../roomAdmin/checkAccessExists.jsx';
 import DisplayRoomUsers from './displayRoomUsers.jsx';
 import { Connector } from 'mqtt-react';
 import {
