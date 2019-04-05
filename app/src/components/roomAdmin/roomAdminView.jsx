@@ -17,8 +17,8 @@ class RoomAdminView extends Component {
     super(props);
     this.state = {
       requestForms: [
-          "samtheo",
-          "joe",
+        "samtheo",
+        "joe",
       ],
     };
   }
@@ -32,6 +32,10 @@ class RoomAdminView extends Component {
     return (
       <div>
         <Grid container>
+          <Grid item xs={12}>
+            <p>Email: {this.props.user.email}</p>
+            <p>UserId: {this.props.user.userId}</p>
+          </Grid>
           <Grid item xs={12} sm={6}>
             <Connector mqttProps={ip}>
               <div className="displayRooms-container">
@@ -47,23 +51,25 @@ class RoomAdminView extends Component {
               <DisplayRoomUsers roomNumber={this.props.user.roomNumber}/>
             </Connector>
           </Grid>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <Connector mqttProps={ip}>
               <GiveAccess roomNumber={this.props.user.roomNumber}/>
             </Connector>
           </Grid>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <Connector mqttProps={ip}>
               <RemoveAccess roomNumber={this.props.user.roomNumber}/>
             </Connector>
           </Grid>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <Connector mqttProps={ip}>
               <CheckAccessExists roomNumber={this.props.user.roomNumber}/>
             </Connector>
           </Grid>
-            <Grid item xs={12} sm={3}>
-                <RoomAccessRequests requestList={this.state.requestForms}/>
+            <Grid item xs={12} sm={6} md={3}>
+              <Connector mqttProps={ip}>
+                <RoomAccessRequests requestList={this.state.requestForms} roomNumber={this.props.user.roomNumber} />
+              </Connector>
             </Grid>
         </Grid>
       </div>
