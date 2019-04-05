@@ -20,8 +20,6 @@ class LoginPage extends Component {
     .catch(error => {
       console.log(error);
     });
-    
-    this.props.history.push('/');
   }
 
   async handleSignup() {
@@ -46,9 +44,8 @@ class LoginPage extends Component {
         } else {
           console.log("success!");
         }
-      });
-
-    this.props.history.push('/');
+      }
+    );
   }
 
   render() {
@@ -65,7 +62,8 @@ class LoginPage extends Component {
                       <TextField
                         id="login-email"
                         label="Email"
-                        type="Email"
+                        autoComplete="email"
+                        type="email"
                         margin="normal"
                         variant="outlined"
                       />

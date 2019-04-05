@@ -14,6 +14,11 @@ class RemoveAccess extends Component {
     this.removeAccessClick = this.removeAccessClick.bind(this);
   }
 
+  componentWillUnmount() {
+    const { mqtt } = this.props;
+    mqtt.end(true);
+  }
+
   async removeAccessClick() {
     const userID = document.getElementById('removeAccess-user').value;
     const roomID = document.getElementById('removeAccess-room').value;

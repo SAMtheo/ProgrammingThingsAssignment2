@@ -16,6 +16,11 @@ class DispalyAllUsers extends Component {
     this.getUsers = this.getUsers.bind(this);
   }
 
+  componentWillUnmount() {
+    const { mqtt } = this.props;
+    mqtt.end(true);
+  }
+
   componentWillUpdate(newProps) {
     if (newProps != this.props) {
       if (newProps.data != null) {

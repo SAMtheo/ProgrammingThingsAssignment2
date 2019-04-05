@@ -14,6 +14,11 @@ class RequestAccess extends Component {
     this.requestAccessClick = this.requestAccessClick.bind(this);
   }
 
+  componentWillUnmount() {
+    const { mqtt } = this.props;
+    mqtt.end(true);
+  }
+
   async requestAccessClick() {
     // const roomID = this.props.roomNumber;
     // const userID = this.props.userNumber;
