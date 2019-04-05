@@ -20,7 +20,7 @@ class CheckAccessExists extends Component {
   }
 
   async checkAccessClick() {
-    const userID = document.getElementById('check-user').value;
+    const userID = this.props.user.userId;
     const roomID = document.getElementById('check-room').value;    
     const message = roomID + ":" + userID;
     const { mqtt } = this.props;
@@ -33,12 +33,6 @@ class CheckAccessExists extends Component {
         <h3>Check Access</h3>
 
         <form>
-          <TextField
-            id="check-user"
-            label="User"
-            margin="normal"
-            variant="outlined"
-          />
           <TextField
             id="check-room"
             label="Room"

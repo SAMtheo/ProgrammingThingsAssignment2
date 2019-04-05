@@ -13,12 +13,14 @@ import { Connector } from 'mqtt-react';
 import MenuAppBar from './header.jsx';
 import Firebase from 'firebase';
 import AdminView from './adminView.jsx';
+import UserView from './userView.jsx';
 
 class Homepage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
+      user: { permission: "user" },
     };
     this.renderPermissionView = this.renderPermissionView.bind(this);
   }
@@ -31,8 +33,14 @@ class Homepage extends Component {
       user = snapshot.val() || { permission: "user" };
     }); 
 
+    let rooms;
+    await Firebase.database().ref('rooms/').once('value')
+    .then(snapshot => {
+      rooms = snapshot.val() || {};
+    });
+
     console.log(user);
-    this.setState({ loading: false, user });
+    this.setState({ loading: false, user, rooms });
   }
 
   renderPermissionView() {
@@ -40,6 +48,11 @@ class Homepage extends Component {
       case "super": {
         return (
           <AdminView />
+        );
+      }
+      case "user": {
+        return (
+          <UserView user={this.state.user} rooms={this.state.rooms} />
         );
       }
     }
