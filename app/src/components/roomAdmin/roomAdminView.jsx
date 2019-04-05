@@ -24,12 +24,8 @@ class RoomAdminView extends Component {
   }
 
   async componentWillMount() {
-      // const roomNumber = this.props.user.roomNumber;
-      // let requestForms;
-      // await Firebase.database().ref('requestForms/' + roomNumber).once('value')
-      //     .then(snapshot => {
-      //         requestForms = snapshot.val() || {};
-      //     });
+    const reqForms = this.props.rooms[this.props.user.roomNumber].reqForms.filter(userId => (userId !== null));
+    this.setState({ requestForms: reqForms });
   }
 
   render() {

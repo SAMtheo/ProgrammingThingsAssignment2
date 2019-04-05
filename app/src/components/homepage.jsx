@@ -47,7 +47,7 @@ class Homepage extends Component {
       }
       case "roomAdmin": {
         return (
-            <RoomAdminView user={this.state.user}/>
+            <RoomAdminView user={this.state.user} rooms={this.state.rooms} />
         )
       }
       case "user": {
