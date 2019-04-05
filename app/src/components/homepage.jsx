@@ -14,6 +14,7 @@ import MenuAppBar from './header.jsx';
 import Firebase from 'firebase';
 import AdminView from './adminView.jsx';
 import UserView from './userView.jsx';
+import RoomAdminView from './roomAdminView.jsx'
 
 class Homepage extends Component {
   constructor(props) {
@@ -49,6 +50,11 @@ class Homepage extends Component {
         return (
           <AdminView />
         );
+      }
+      case "roomAdmin": {
+        return (
+            <RoomAdminView user={this.state.user}/>
+        )
       }
       case "user": {
         return (
