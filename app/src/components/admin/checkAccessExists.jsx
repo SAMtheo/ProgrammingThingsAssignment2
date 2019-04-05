@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import {
-  Button, TextField,
+  Button, TextField
 } from '@material-ui/core';
-import '../styles/removeAccess.css';
 import { subscribe } from 'mqtt-react';
+import '../../styles/checkAccessExists.css';
 
-const topic = "removeAccess"
+const topic = "checkAccess";
 
-class RemoveAccess extends Component {
+class CheckAccessExists extends Component {
   constructor(props) {
     super(props);
 
-    this.removeAccessClick = this.removeAccessClick.bind(this);
+    this.checkAccessClick = this.checkAccessClick.bind(this);
   }
 
   componentWillUnmount() {
@@ -19,29 +19,28 @@ class RemoveAccess extends Component {
     mqtt.end(true);
   }
 
-  async removeAccessClick() {
-    const userID = document.getElementById('removeAccess-user').value;
-    const roomID = document.getElementById('removeAccess-room').value;
+  async checkAccessClick() {
+    const userID = document.getElementById('check-user').value;
+    const roomID = document.getElementById('check-room').value;    
     const message = roomID + ":" + userID;
-
     const { mqtt } = this.props;
     await mqtt.publish(topic, message);
   }
 
   render() {
     return (
-      <div className="removeAccess-container">
-        <h3>Remove Access</h3>
+      <div className="check-container">
+        <h3>Check Access</h3>
 
         <form>
           <TextField
-            id="removeAccess-user"
+            id="check-user"
             label="User"
             margin="normal"
             variant="outlined"
           />
           <TextField
-            id="removeAccess-room"
+            id="check-room"
             label="Room"
             margin="normal"
             variant="outlined"
@@ -50,8 +49,8 @@ class RemoveAccess extends Component {
 
         <p>{this.props.data}</p>
 
-        <Button onClick={this.removeAccessClick} variant="contained" color="primary">
-          Remove Access
+        <Button onClick={this.checkAccessClick} variant="contained" color="primary">
+          Check Access
         </Button>
       </div>
     );
@@ -60,4 +59,4 @@ class RemoveAccess extends Component {
 
 export default subscribe({
   topic,
-})(RemoveAccess);
+})(CheckAccessExists);

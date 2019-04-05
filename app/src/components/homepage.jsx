@@ -4,14 +4,10 @@ import {
 } from '@material-ui/core';
 import Loading from './loading.jsx';
 import '../styles/homepage.css';
-import GiveAccess from './giveAccess.jsx';
-import RemoveAccess from './removeAccess.jsx';
-import CheckAccessExists from './checkAccessExists.jsx';
-import DisplayAllRooms from './displayAllRooms.jsx';
-import DisplayAllUsers from './displayAllUsers.jsx';
-import { Connector } from 'mqtt-react';
 import MenuAppBar from './header.jsx';
 import Firebase from 'firebase';
+import AdminView from './admin/adminView.jsx';
+import RoomAdminView from './roomAdmin/roomAdminView.jsx'
 import AdminView from './adminView.jsx';
 import UserView from './userView.jsx';
 import RoomAdminView from './roomAdminView.jsx'

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import GiveAccess from './giveAccess.jsx';
-import RemoveAccess from './removeAccess.jsx';
-import CheckAccessExists from './checkAccessExists.jsx';
+import GiveAccess from '../admin/giveAccess.jsx';
+import RemoveAccess from '../admin/removeAccess.jsx';
+import CheckAccessExists from '../admin/checkAccessExists.jsx';
 import DisplayRoomUsers from './displayRoomUsers.jsx';
-import DisplayAllUsers from './displayAllUsers.jsx';
 import { Connector } from 'mqtt-react';
 import {
   Grid,
@@ -37,17 +36,17 @@ class RoomAdminView extends Component {
           </Grid>
           <Grid item xs={12} sm={4}>
             <Connector mqttProps={ip}>
-              <GiveAccess />
+              <GiveAccess roomNumber={this.props.user.roomNumber}/>
             </Connector>
           </Grid>
           <Grid item xs={12} sm={4}>
             <Connector mqttProps={ip}>
-              <RemoveAccess />
+              <RemoveAccess roomNumber={this.props.user.roomNumber}/>
             </Connector>
           </Grid>
           <Grid item xs={12} sm={4}>
             <Connector mqttProps={ip}>
-              <CheckAccessExists />
+              <CheckAccessExists roomNumber={this.props.user.roomNumber}/>
             </Connector>
           </Grid>
         </Grid>

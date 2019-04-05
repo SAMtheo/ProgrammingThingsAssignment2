@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   Grid, Button,
 } from '@material-ui/core';
-import '../styles/displayAllUsers.css';
+import '../../styles/displayAllUsers.css';
 import { subscribe } from 'mqtt-react';
 
 const topic = "getUsersDoor";
