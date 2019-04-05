@@ -18,7 +18,7 @@ class RequestAccess extends Component {
     const roomId = document.getElementById('req-room').value;
 
     const userId = this.props.user.userId;
-    const email = this.props.user.email;
+    const email = this.props.rooms[roomId].roomAdmin;
 
     const { mqtt } = this.props;
 

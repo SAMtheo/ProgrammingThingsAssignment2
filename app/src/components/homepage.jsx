@@ -33,8 +33,14 @@ class Homepage extends Component {
       user = snapshot.val() || { permission: "user" };
     }); 
 
+    let rooms;
+    await Firebase.database().ref('rooms/').once('value')
+    .then(snapshot => {
+      rooms = snapshot.val() || {};
+    });
+
     console.log(user);
-    this.setState({ loading: false, user });
+    this.setState({ loading: false, user, rooms });
   }
 
   renderPermissionView() {
@@ -46,7 +52,7 @@ class Homepage extends Component {
       }
       case "user": {
         return (
-          <UserView user={this.state.user} />
+          <UserView user={this.state.user} rooms={this.state.rooms} />
         );
       }
     }

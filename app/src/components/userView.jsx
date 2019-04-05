@@ -31,7 +31,7 @@ class UserView extends Component {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Connector mqttProps={ip}>
-              <RequestAccess user={this.props.user} />
+              <RequestAccess user={this.props.user} rooms={this.props.rooms} />
             </Connector>
           </Grid>
           <Grid item xs={12} sm={6}>
