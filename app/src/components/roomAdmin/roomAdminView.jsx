@@ -3,16 +3,33 @@ import GiveAccess from '../roomAdmin/giveAccess.jsx';
 import RemoveAccess from '../roomAdmin/removeAccess.jsx';
 import CheckAccessExists from '../roomAdmin/checkAccessExists.jsx';
 import DisplayRoomUsers from './displayRoomUsers.jsx';
+import RoomAccessRequests from './roomAccessRequests.jsx';
 import { Connector } from 'mqtt-react';
 import {
   Grid,
 } from '@material-ui/core';
+import Firebase from 'firebase';
 
 const ip = "mqtt://100.68.110.31:9001";
 
 class RoomAdminView extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      requestForms: [
+          "samtheo",
+          "joe",
+      ],
+    };
+  }
+
+  async componentWillMount() {
+      // const roomNumber = this.props.user.roomNumber;
+      // let requestForms;
+      // await Firebase.database().ref('requestForms/' + roomNumber).once('value')
+      //     .then(snapshot => {
+      //         requestForms = snapshot.val() || {};
+      //     });
   }
 
   render() {
@@ -34,21 +51,24 @@ class RoomAdminView extends Component {
               <DisplayRoomUsers roomNumber={this.props.user.roomNumber}/>
             </Connector>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={3}>
             <Connector mqttProps={ip}>
               <GiveAccess roomNumber={this.props.user.roomNumber}/>
             </Connector>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={3}>
             <Connector mqttProps={ip}>
               <RemoveAccess roomNumber={this.props.user.roomNumber}/>
             </Connector>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={3}>
             <Connector mqttProps={ip}>
               <CheckAccessExists roomNumber={this.props.user.roomNumber}/>
             </Connector>
           </Grid>
+            <Grid item xs={12} sm={3}>
+                <RoomAccessRequests requestList={this.state.requestForms}/>
+            </Grid>
         </Grid>
       </div>
     );
