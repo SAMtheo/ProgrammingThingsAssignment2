@@ -13,12 +13,14 @@ import { Connector } from 'mqtt-react';
 import MenuAppBar from './header.jsx';
 import Firebase from 'firebase';
 import AdminView from './adminView.jsx';
+import UserView from './userView.jsx';
 
 class Homepage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
+      user: { permission: "user" },
     };
     this.renderPermissionView = this.renderPermissionView.bind(this);
   }
@@ -40,6 +42,11 @@ class Homepage extends Component {
       case "super": {
         return (
           <AdminView />
+        );
+      }
+      case "user": {
+        return (
+          <UserView user={this.state.user} />
         );
       }
     }

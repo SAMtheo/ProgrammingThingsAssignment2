@@ -47,9 +47,6 @@ class GiveAccess extends Component {
           />
         </form>
 
-        {/* <p>Room ID: {this.props.roomNumber}</p>
-        <p>User ID: {this.props.userNumber}</p> */}
-
         <p>{this.props.data}</p>
 
         <Button onClick={this.giveAccessClick} variant="contained" color="primary">
