@@ -4,13 +4,15 @@ import {
 } from '@material-ui/core';
 import Loading from './loading.jsx';
 import '../styles/homepage.css';
-import RequestAccess from './requestAccess.jsx';
+import GiveAccess from './giveAccess.jsx';
 import RemoveAccess from './removeAccess.jsx';
 import CheckAccessExists from './checkAccessExists.jsx';
 import DisplayAllRooms from './displayAllRooms.jsx';
 import DisplayAllUsers from './displayAllUsers.jsx';
 import { Connector } from 'mqtt-react';
 import MenuAppBar from './header.jsx';
+import Firebase from 'firebase';
+import AdminView from './adminView.jsx';
 
 class Homepage extends Component {
   constructor(props) {
@@ -18,10 +20,29 @@ class Homepage extends Component {
     this.state = {
       loading: true,
     };
+    this.renderPermissionView = this.renderPermissionView.bind(this);
   }
 
-  componentWillMount() {
-    this.setState({loading: false});
+  async componentWillMount() {
+    const uid = Firebase.auth().currentUser.uid;
+    let user;
+    await Firebase.database().ref('users/' + uid).once('value')
+    .then(snapshot => {
+      user = snapshot.val() || { permission: "user" };
+    }); 
+
+    console.log(user);
+    this.setState({ loading: false, user });
+  }
+
+  renderPermissionView() {
+    switch (this.state.user.permission) {
+      case "super": {
+        return (
+          <AdminView />
+        );
+      }
+    }
   }
 
   render() {
@@ -39,22 +60,7 @@ class Homepage extends Component {
               <Grid container spacing={8}>
                 <Grid item xs={12}>
                   <h1>Room Access System</h1>
-                  <p>dummy data: 80099E1C 0001</p>
-                  <Connector mqttProps="mqtt://100.68.110.31:9001">
-                    <RequestAccess roomNumber="0001" userNumber="80099E1C" />
-                  </Connector>
-                  <Connector mqttProps="mqtt://100.68.110.31:9001">
-                    <RemoveAccess roomNumber="0001" userNumber="80099E1C" />
-                  </Connector>
-                  <Connector mqttProps="mqtt://100.68.110.31:9001">
-                    <CheckAccessExists />
-                  </Connector>
-                  <Connector mqttProps="mqtt://100.68.110.31:9001">
-                    <DisplayAllRooms />
-                  </Connector>
-                  <Connector mqttProps="mqtt://100.68.110.31:9001">
-                    <DisplayAllUsers />
-                  </Connector>
+                  {this.renderPermissionView()}
                 </Grid>
               </Grid>
             </Card>

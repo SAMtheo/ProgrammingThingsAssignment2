@@ -20,18 +20,32 @@ class LoginPage extends Component {
     .catch(error => {
       console.log(error);
     });
-    this.props.history.push('/');
   }
 
   async handleSignup() {
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
-    await Firebase.auth().createUserWithEmailAndPassword(email, password)
+    const { user: { uid } } = await Firebase.auth().createUserWithEmailAndPassword(email, password)
     .catch((error) => {
       console.log(error);
     });
-    this.props.history.push('/');
+
+    console.log(uid);
+
+    await Firebase.database().ref('users/' + uid).set(
+      {
+        uid,
+        email,
+        permission: "user",
+      }, (error) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("success!");
+        }
+      }
+    );
   }
 
   render() {
@@ -48,7 +62,8 @@ class LoginPage extends Component {
                       <TextField
                         id="login-email"
                         label="Email"
-                        type="Email"
+                        autoComplete="email"
+                        type="email"
                         margin="normal"
                         variant="outlined"
                       />

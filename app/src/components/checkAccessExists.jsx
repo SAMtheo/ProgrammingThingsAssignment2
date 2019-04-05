@@ -14,6 +14,11 @@ class CheckAccessExists extends Component {
     this.checkAccessClick = this.checkAccessClick.bind(this);
   }
 
+  componentWillUnmount() {
+    const { mqtt } = this.props;
+    mqtt.end(true);
+  }
+
   async checkAccessClick() {
     const userID = document.getElementById('check-user').value;
     const roomID = document.getElementById('check-room').value;    

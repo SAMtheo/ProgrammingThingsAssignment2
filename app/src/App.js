@@ -30,7 +30,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: true,
+      loggedIn: false,
       loading: true,
     };
   }
@@ -70,18 +70,18 @@ class App extends Component {
       <Router>
         <div className="page">
           <MuiThemeProvider theme={theme}>
-            <Route path='/login' component={LoginPage}/>
-            <Route exact path='/' component={() => {
-              if (this.state.loggedIn) {
-                return (
-                    <Homepage />
-                );
-              } else {
-                return (
-                    <Redirect to='/login' />
-                );
-              }
-            }}/>
+            <Route path='/login' component={() => (
+              this.state.loggedIn ?
+                <Redirect to="/" />
+                :
+                <LoginPage />
+            )}/>
+            <Route exact path='/' component={() => (
+              this.state.loggedIn ?
+                <Homepage />
+                :
+                <Redirect to="/login" />
+            )}/>
           </MuiThemeProvider>
         </div>
       </Router>
