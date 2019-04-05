@@ -42,7 +42,7 @@ class RoomAdminView extends Component {
           </Grid>
           <Grid item xs={12} sm={4}>
             <Connector mqttProps={ip}>
-              <RemoveAccess roomNumber="0001" userNumber="80099E1C" />
+              <RemoveAccess />
             </Connector>
           </Grid>
           <Grid item xs={12} sm={4}>
