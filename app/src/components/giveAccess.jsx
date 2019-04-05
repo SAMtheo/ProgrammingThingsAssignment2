@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import {
   Button, TextField
 } from '@material-ui/core';
-import '../styles/requestAccess.css';
+import '../styles/giveAccess.css';
 import { subscribe } from 'mqtt-react';
 
-const topic = "requestAccess";
+const topic = "giveAccess";
 
-class RequestAccess extends Component {
+class GiveAccess extends Component {
   constructor(props) {
     super(props);
 
-    this.requestAccessClick = this.requestAccessClick.bind(this);
+    this.giveAccessClick = this.giveAccessClick.bind(this);
   }
 
   componentWillUnmount() {
@@ -19,31 +19,28 @@ class RequestAccess extends Component {
     mqtt.end(true);
   }
 
-  async requestAccessClick() {
-    // const roomID = this.props.roomNumber;
-    // const userID = this.props.userNumber;
-    const roomID = document.getElementById('requestAccess-room').value;
-    const userID = document.getElementById('requestAccess-user').value;
+  async giveAccessClick() {
+    const roomID = document.getElementById('giveAccess-room').value;
+    const userID = document.getElementById('giveAccess-user').value;
     const message = roomID + ":" + userID;
     const { mqtt } = this.props;
     await mqtt.publish(topic, message);
-    // const response = this.props.data.filter(message => message.includes('#'))[0];
   }
 
   render() {
     return (
-      <div className="requestAccess-container">
-        <h3>Request Access</h3>
+      <div className="giveAccess-container">
+        <h3>Give Access</h3>
 
         <form>
           <TextField
-            id="requestAccess-user"
+            id="giveAccess-user"
             label="User"
             margin="normal"
             variant="outlined"
           />
           <TextField
-            id="requestAccess-room"
+            id="giveAccess-room"
             label="Room"
             margin="normal"
             variant="outlined"
@@ -55,7 +52,7 @@ class RequestAccess extends Component {
 
         <p>{this.props.data}</p>
 
-        <Button onClick={this.requestAccessClick} variant="contained" color="primary">
+        <Button onClick={this.giveAccessClick} variant="contained" color="primary">
           Request Access
         </Button>
       </div>
@@ -65,4 +62,4 @@ class RequestAccess extends Component {
 
 export default subscribe({
   topic,
-})(RequestAccess);
+})(GiveAccess);

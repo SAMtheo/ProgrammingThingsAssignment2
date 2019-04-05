@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import RequestAccess from './requestAccess.jsx';
+import GiveAccess from './giveAccess.jsx';
 import RemoveAccess from './removeAccess.jsx';
 import CheckAccessExists from './checkAccessExists.jsx';
 import DisplayAllRooms from './displayAllRooms.jsx';
@@ -32,7 +32,7 @@ class AdminView extends Component {
           </Grid>
           <Grid item xs={12} sm={4}>
             <Connector mqttProps={ip}>
-              <RequestAccess roomNumber="0001" userNumber="80099E1C" />
+              <GiveAccess />
             </Connector>
           </Grid>
           <Grid item xs={12} sm={4}>

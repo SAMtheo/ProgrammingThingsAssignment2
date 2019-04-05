@@ -4,7 +4,7 @@ import {
 } from '@material-ui/core';
 import Loading from './loading.jsx';
 import '../styles/homepage.css';
-import RequestAccess from './requestAccess.jsx';
+import GiveAccess from './giveAccess.jsx';
 import RemoveAccess from './removeAccess.jsx';
 import CheckAccessExists from './checkAccessExists.jsx';
 import DisplayAllRooms from './displayAllRooms.jsx';
