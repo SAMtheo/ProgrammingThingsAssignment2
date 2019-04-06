@@ -10,12 +10,6 @@ import {
 } from '@material-ui/core';
 
 /**
- * IP for local MQTT requests.
- * @type {string}
- */
-const ip = "mqtt://100.68.110.31:9001";
-
-/**
  * View component containing room admin specific components.
  */
 class RoomAdminView extends Component {
@@ -51,7 +45,7 @@ class RoomAdminView extends Component {
             <p>UserId: {this.props.user.userId}</p>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Connector mqttProps={ip}>
+            <Connector mqttProps={this.props.ip}>
               <div className="displayRooms-container">
                 <h3>My Room</h3>
                 <p>
@@ -61,27 +55,27 @@ class RoomAdminView extends Component {
             </Connector>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Connector mqttProps={ip}>
+            <Connector mqttProps={this.props.ip}>
               <DisplayRoomUsers roomNumber={this.props.user.roomNumber}/>
             </Connector>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Connector mqttProps={ip}>
+            <Connector mqttProps={this.props.ip}>
               <GiveAccess roomNumber={this.props.user.roomNumber}/>
             </Connector>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Connector mqttProps={ip}>
+            <Connector mqttProps={this.props.ip}>
               <RemoveAccess roomNumber={this.props.user.roomNumber}/>
             </Connector>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Connector mqttProps={ip}>
+            <Connector mqttProps={this.props.ip}>
               <CheckAccessExists roomNumber={this.props.user.roomNumber}/>
             </Connector>
           </Grid>
             <Grid item xs={12} sm={6} md={3}>
-              <Connector mqttProps={ip}>
+              <Connector mqttProps={this.props.ip}>
                 <RoomAccessRequests requestList={this.state.requestForms} roomNumber={this.props.user.roomNumber} />
               </Connector>
             </Grid>

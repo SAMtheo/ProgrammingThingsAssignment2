@@ -81,12 +81,12 @@ class Homepage extends Component {
       }
       case "roomAdmin": {
         return (
-            <RoomAdminView user={this.state.user} rooms={this.state.rooms} />
+            <RoomAdminView ip={this.state.ip} user={this.state.user} rooms={this.state.rooms} />
         )
       }
       case "user": {
         return (
-          <UserView user={this.state.user} rooms={this.state.rooms} />
+          <UserView ip={this.state.ip} user={this.state.user} rooms={this.state.rooms} />
         );
       }
     }
