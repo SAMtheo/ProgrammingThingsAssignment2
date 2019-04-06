@@ -33,8 +33,13 @@ class RoomAdminView extends Component {
 
   async componentWillMount() {
     // Filter out invalid userIDs
-    const reqForms = this.props.rooms[this.props.user.roomNumber].reqForms.filter(userId => (userId !== null));
-    this.setState({ requestForms: reqForms });
+    const reqForms = this.props.rooms[this.props.user.roomNumber].reqForms;
+    if (reqForms != null) {
+      const reqFormsFiltered = reqForms.filter(userId => (userId !== null))
+      this.setState({ requestForms: reqForms });
+    } else {
+      this.setState({ requestForms: [] });
+    }
   }
 
   render() {
