@@ -2,16 +2,17 @@ import time
 import smtplib 
 import string
 
+
+# set up initial values for use in the rest of the program
 emailServer = smtplib.SMTP("smtp.ionos.com", 587)
-
-
 users = [ "80099E1C", "D0BBA61C", "90E99E1C", "90BEA01C" ]
-
 doorAcc = { 
         "0001":[ ("80099E1C", -1) , ("D0BBA61C", -1) ],
         "0002":[],
         "0003":[]
         }
+
+
 
 # Returns a list of all users in a CSV string
 def getAllUsers() :
@@ -56,6 +57,7 @@ def addDoor(door) :
         doorAcc[door] = []
         return "True"
 
+# Adds a user to the database
 def addUser(id) :
     if id in users :
         return "False"
@@ -114,6 +116,7 @@ def validTime (id) :
     return False
 
 
+# Send an email to a given email address, with a given user id & door id
 def shootEmail(door,id,email) :
     emailServer.login("temp@m1k.me","password")
     
@@ -132,6 +135,7 @@ def shootEmail(door,id,email) :
     emailServer.sendmail("temp@m1k.me", emails, msg)
     print("Sent to %s" % (emails))
 
+# Get all users with access to a given door
 def getUsersDoor(door) :
     d = doorAcc.get(door)
 

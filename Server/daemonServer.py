@@ -19,13 +19,17 @@ def on_subscribe(client, userdata, mid, granted_qos):
 # Callback for when a message is posted an a subscribed topic
 def on_message(client, userdata, message):
 
+
+        #filter out all messages starting with # to ensure that we dont process our own messages
     if (str(message.payload.decode('utf-8'))[0] != '#') :
         print (message.topic)
         print ("message " + str(message.payload.decode("utf-8")))
         topic = message.topic
         m = str(message.payload.decode("utf-8"))
         m = m.split(":")
+        
 
+        #case block determining how to process incoming messages based on topic
         if (topic == "removeAccess") : 
             res = Server.removeIDDoor(m[0],m[1])
             if res :
@@ -44,7 +48,6 @@ def on_message(client, userdata, message):
             client.publish(topic, "#"+res)
 
         elif (topic == "checkAccess") :
-            print(m[0] + "?" + m[1]+ "?")
             res = Server.query(m[0],m[1])
             client.publish(topic, "#"+res)
         elif (topic == "getRooms") : 
