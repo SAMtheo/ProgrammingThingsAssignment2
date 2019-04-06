@@ -56,7 +56,7 @@ class Homepage extends Component {
     switch (this.state.user.permission) {
       case "super": {
         return (
-          <AdminView />
+          <AdminView user={this.state.user} />
         );
       }
       case "roomAdmin": {

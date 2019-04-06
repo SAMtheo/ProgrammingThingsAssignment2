@@ -20,6 +20,12 @@ class AdminView extends Component {
     return (
       <div>
         <Grid container>
+          <Grid item xs={12}>
+            <div>
+              <p>Email: {this.props.user.email}</p>
+              <p>UserId: {this.props.user.userId}</p>
+            </div>
+          </Grid>
           <Grid item xs={12} sm={6}>
             <Connector mqttProps={ip}>
               <DisplayAllRooms />
