@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import Firebase from 'firebase';
 
@@ -13,12 +15,13 @@ const styles = {
     root: {
         flexGrow: 1,
     },
-    grow: {
-        flexGrow: 1,
+    rightToolbar: {
+        marginLeft: 'auto',
+        marginRight: -12,
     },
-    menuButton: {
+    leftToolbar: {
         marginLeft: -12,
-        marginRight: 20,
+        marginRight: 'auto',
     },
 };
 
@@ -29,10 +32,6 @@ class MenuAppBar extends React.Component {
     state = {
         auth: true,
         anchorEl: null,
-    };
-
-    handleChange = event => {
-        this.setState({ auth: event.target.checked });
     };
 
     handleMenu = event => {
@@ -47,6 +46,11 @@ class MenuAppBar extends React.Component {
         Firebase.auth().signOut();
     };
 
+    // Calls back to change the view on homepage
+    handleChange = (event,view) => {
+        this.props.changeView(view);
+    };
+      
     render() {
         const { classes } = this.props;
         const { auth, anchorEl } = this.state;
@@ -56,8 +60,29 @@ class MenuAppBar extends React.Component {
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
-                        {/*TODO*/}
-                        <Button onClick={this.logoutClick}>
+                        <div className={classes.leftToolbar}>
+                            <Button
+                                aria-owns={anchorEl ? 'view-choices' : undefined}
+                                aria-haspopup="true"
+                                onClick={this.handleMenu}
+                            >
+                                Change View
+                            </Button>
+                            <Menu
+                                id="view-choices"
+                                anchorEl={anchorEl}
+                                open={Boolean(anchorEl)}
+                                onClose={this.handleClose}
+                            >
+                            {this.props.views.map(view => (
+                                <MenuItem 
+                                    onClick={event => this.handleChange(event, view)}
+                                    value={view}>{view}
+                                </MenuItem>
+                            ))}
+                            </Menu>
+                        </div>
+                        <Button className={classes.rightToolbar} onClick={this.logoutClick}>
                             Log Out
                         </Button>
                     </Toolbar>

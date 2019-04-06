@@ -10,12 +10,6 @@ import {
 } from '@material-ui/core';
 
 /**
- * IP for local MQTT requests.
- * @type {string}
- */
-const ip = "mqtt://100.68.110.31:9001";
-
-/**
  * View component containing room admin specific components.
  */
 class RoomAdminView extends Component {
@@ -32,9 +26,16 @@ class RoomAdminView extends Component {
   }
 
   async componentWillMount() {
-    // Filter out invalid userIDs
-    const reqForms = this.props.rooms[this.props.user.roomNumber].reqForms.filter(userId => (userId !== null));
-    this.setState({ requestForms: reqForms });
+    // Get request forms from Firebase
+    const reqForms = this.props.rooms[this.props.user.roomNumber].reqForms;
+    if (reqForms != null) {
+      // Filter out invalid userIDs
+      const reqFormsFiltered = reqForms.filter(userId => (userId !== null))
+      this.setState({ requestForms: reqForms });
+    } else {
+      // If there are no req forms, then put an empty file instead
+      this.setState({ requestForms: [] });
+    }
   }
 
   render() {
@@ -46,7 +47,7 @@ class RoomAdminView extends Component {
             <p>UserId: {this.props.user.userId}</p>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Connector mqttProps={ip}>
+            <Connector mqttProps={this.props.ip}>
               <div className="displayRooms-container">
                 <h3>My Room</h3>
                 <p>
@@ -56,27 +57,27 @@ class RoomAdminView extends Component {
             </Connector>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Connector mqttProps={ip}>
+            <Connector mqttProps={this.props.ip}>
               <DisplayRoomUsers roomNumber={this.props.user.roomNumber}/>
             </Connector>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Connector mqttProps={ip}>
+            <Connector mqttProps={this.props.ip}>
               <GiveAccess roomNumber={this.props.user.roomNumber}/>
             </Connector>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Connector mqttProps={ip}>
+            <Connector mqttProps={this.props.ip}>
               <RemoveAccess roomNumber={this.props.user.roomNumber}/>
             </Connector>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Connector mqttProps={ip}>
+            <Connector mqttProps={this.props.ip}>
               <CheckAccessExists roomNumber={this.props.user.roomNumber}/>
             </Connector>
           </Grid>
             <Grid item xs={12} sm={6} md={3}>
-              <Connector mqttProps={ip}>
+              <Connector mqttProps={this.props.ip}>
                 <RoomAccessRequests requestList={this.state.requestForms} roomNumber={this.props.user.roomNumber} />
               </Connector>
             </Grid>

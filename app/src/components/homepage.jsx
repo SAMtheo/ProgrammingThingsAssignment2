@@ -20,8 +20,10 @@ class Homepage extends Component {
       loading: true,
       user: { permission: "user" },
       ip: "mqtt://100.68.110.31:9001",
+      selectedView: "user",
     };
     this.renderPermissionView = this.renderPermissionView.bind(this);
+    this.changeView = this.changeView.bind(this);
   }
 
   /**
@@ -47,14 +49,36 @@ class Homepage extends Component {
       rooms = snapshot.val() || {};
     });
 
-    this.setState({ loading: false, user, rooms });
+    // create a list of views that the current users permissions permit them to view
+    let views;
+    switch (user.permission) {
+      case "super": {
+        views = ["super", "roomAdmin", "user"];
+      } break;
+      case "roomAdmin": {
+        views = ["roomAdmin", "user"];
+      } break;
+      case "user": {
+        views = ["user"];
+      } break;
+    }
+
+    this.setState({ loading: false, user, rooms, views, selectedView: views[0] });
   }
 
   /**
-   * depending on the user permissions, show a different view
+   * Changes the currently selected view to the new view
+   * I.e. admin view -> user view
+   */
+  changeView(newView) {
+    this.setState({ selectedView: newView });
+  }
+
+  /**
+   * Display the currently selected view
    */
   renderPermissionView() {
-    switch (this.state.user.permission) {
+    switch (this.state.selectedView) {
       case "super": {
         return (
           <AdminView ip={this.state.ip} user={this.state.user} />
@@ -62,12 +86,12 @@ class Homepage extends Component {
       }
       case "roomAdmin": {
         return (
-            <RoomAdminView user={this.state.user} rooms={this.state.rooms} />
+            <RoomAdminView ip={this.state.ip} user={this.state.user} rooms={this.state.rooms} />
         )
       }
       case "user": {
         return (
-          <UserView user={this.state.user} rooms={this.state.rooms} />
+          <UserView ip={this.state.ip} user={this.state.user} rooms={this.state.rooms} />
         );
       }
     }
@@ -81,7 +105,7 @@ class Homepage extends Component {
     }
     return (
       <div className="background">
-        <MenuAppBar />
+        <MenuAppBar changeView={this.changeView} views={this.state.views}/>
         <Grid container>
           <Grid item xs={12}>
             <Card className="homepage-container">
