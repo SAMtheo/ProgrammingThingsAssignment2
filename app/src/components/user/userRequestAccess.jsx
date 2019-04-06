@@ -13,7 +13,7 @@ const topic = "requestNewAccess";
  * then updates the database for that room,
  * saving the fact that they have requested access for a room.
  */
-class RequestAccess extends Component {
+class UserRequestAccess extends Component {
   constructor(props) {
     super(props);
     this.requestAccessClick = this.requestAccessClick.bind(this);
@@ -86,4 +86,4 @@ class RequestAccess extends Component {
 
 export default subscribe({
   topic,
-})(RequestAccess);
+})(UserRequestAccess);

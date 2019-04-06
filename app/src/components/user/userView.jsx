@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Grid } from '@material-ui/core';
 import { Connector } from 'mqtt-react';
 import DisplayAllRooms from '../admin/displayAllRooms.jsx';
-import RequestAccess from './requestAccess.jsx';
+import UserRequestAccess from './userRequestAccess.jsx';
 import CheckAccess from './userCheckAccess.jsx';
 
 // const ip of mqtt server to connet to.
@@ -35,7 +35,7 @@ class UserView extends Component {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Connector mqttProps={ip}>
-              <RequestAccess user={this.props.user} rooms={this.props.rooms} />
+              <UserRequestAccess user={this.props.user} rooms={this.props.rooms} />
             </Connector>
           </Grid>
           <Grid item xs={12} sm={6}>
