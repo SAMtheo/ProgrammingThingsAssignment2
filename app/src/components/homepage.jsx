@@ -49,6 +49,7 @@ class Homepage extends Component {
       rooms = snapshot.val() || {};
     });
 
+    // create a list of views that the current users permissions permit them to view
     let views;
     switch (user.permission) {
       case "super": {
@@ -65,12 +66,16 @@ class Homepage extends Component {
     this.setState({ loading: false, user, rooms, views, selectedView: views[0] });
   }
 
+  /**
+   * Changes the currently selected view to the new view
+   * I.e. admin view -> user view
+   */
   changeView(newView) {
     this.setState({ selectedView: newView });
   }
 
   /**
-   * depending on the user permissions, show a different view
+   * Display the currently selected view
    */
   renderPermissionView() {
     switch (this.state.selectedView) {

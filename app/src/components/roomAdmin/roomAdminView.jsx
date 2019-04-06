@@ -26,12 +26,14 @@ class RoomAdminView extends Component {
   }
 
   async componentWillMount() {
-    // Filter out invalid userIDs
+    // Get request forms from Firebase
     const reqForms = this.props.rooms[this.props.user.roomNumber].reqForms;
     if (reqForms != null) {
+      // Filter out invalid userIDs
       const reqFormsFiltered = reqForms.filter(userId => (userId !== null))
       this.setState({ requestForms: reqForms });
     } else {
+      // If there are no req forms, then put an empty file instead
       this.setState({ requestForms: [] });
     }
   }

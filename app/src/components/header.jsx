@@ -49,6 +49,7 @@ class MenuAppBar extends React.Component {
         Firebase.auth().signOut();
     };
 
+    // Calls back to change the view on homepage
     handleChange = (event,view) => {
         this.props.changeView(view);
     };
