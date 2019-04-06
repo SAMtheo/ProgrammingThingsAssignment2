@@ -16,6 +16,10 @@ const styles = {
     grow: {
         flexGrow: 1,
     },
+    rightToolbar: {
+        marginLeft: 'auto',
+        marginRight: -12,
+    },
     menuButton: {
         marginLeft: -12,
         marginRight: 20,
@@ -56,8 +60,7 @@ class MenuAppBar extends React.Component {
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
-                        {/*TODO*/}
-                        <Button onClick={this.logoutClick}>
+                        <Button className={classes.rightToolbar} onClick={this.logoutClick}>
                             Log Out
                         </Button>
                     </Toolbar>
