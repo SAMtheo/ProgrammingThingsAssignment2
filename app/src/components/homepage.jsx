@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import {
-  Card, Grid,
-} from '@material-ui/core';
-import Loading from './loading.jsx';
-import '../styles/homepage.css';
-import MenuAppBar from './header.jsx';
+import { Card, Grid } from '@material-ui/core';
 import Firebase from 'firebase';
+import Loading from './loading.jsx';
+import MenuAppBar from './header.jsx';
 import AdminView from './admin/adminView.jsx';
 import RoomAdminView from './roomAdmin/roomAdminView.jsx'
 import UserView from './user/userView.jsx';
+import '../styles/homepage.css';
 
+/**
+ * the Homepage componenet decides which view should be displayed,
+ * This is done by retrieving user data from firebase then depending
+ * on their permissions, selects which view they can see.
+ */
 class Homepage extends Component {
   constructor(props) {
     super(props);
@@ -20,24 +23,35 @@ class Homepage extends Component {
     this.renderPermissionView = this.renderPermissionView.bind(this);
   }
 
+  /**
+   * checks uid of currently signed in user. then retieves user data
+   * from the firebase database.
+   * also gets all room data,
+   * then stores this data into the state of the homepage componenet,
+   * to be passed to individual components.
+   */
   async componentWillMount() {
     const uid = Firebase.auth().currentUser.uid;
     let user;
+    // gets user detials from firebase
     await Firebase.database().ref('users/' + uid).once('value')
     .then(snapshot => {
       user = snapshot.val() || { permission: "user" };
     }); 
 
     let rooms;
+    // gets room details from firebase
     await Firebase.database().ref('rooms/').once('value')
     .then(snapshot => {
       rooms = snapshot.val() || {};
     });
 
-    console.log(user);
     this.setState({ loading: false, user, rooms });
   }
 
+  /**
+   * depending on the user permissions, show a different view
+   */
   renderPermissionView() {
     switch (this.state.user.permission) {
       case "super": {
