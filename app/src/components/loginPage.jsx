@@ -5,6 +5,12 @@ import {
 import Firebase from 'firebase';
 import '../styles/loginPage.css';
 
+/**
+ * Login page deals with signup and login of the user.
+ * the user will be redirected here if they are not logged in.
+ * if a user is logged in and tries to get here, then they are redirected
+ * to the homepage.
+ */
 class LoginPage extends Component {
   constructor(props) {
     super(props);
@@ -12,16 +18,28 @@ class LoginPage extends Component {
     this.handleSignup = this.handleSignup.bind(this);
   }
 
+  /**
+   * gets the email and password from the textfields.
+   * then uses firebase auth to login. Can only login if their email and
+   * passwords are complete.
+   */
   async handleLogin() {
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
+    // console logs error if the user cannot login
     await Firebase.auth().signInWithEmailAndPassword(email, password)
     .catch(error => {
       console.log(error);
     });
   }
 
+  /**
+   * gets the email and password from the textfields.
+   * then uses firebase to create an account.
+   * once an account is created, it sets up a field in the
+   * database to store user information.
+   */
   async handleSignup() {
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
@@ -31,8 +49,7 @@ class LoginPage extends Component {
       console.log(error);
     });
 
-    console.log(uid);
-
+    // sets data for new useer
     await Firebase.database().ref('users/' + uid).set(
       {
         uid,

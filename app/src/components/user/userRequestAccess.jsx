@@ -1,19 +1,30 @@
 import React, { Component } from 'react';
-import {
-  TextField, Button
-} from '@material-ui/core';
-import '../../styles/requestAccess.css';
+import { TextField, Button } from '@material-ui/core';
 import { subscribe } from 'mqtt-react';
 import Firebase from 'firebase';
+import '../../styles/requestAccess.css';
 
+// topic id for mqtt subscription and publish.
 const topic = "requestNewAccess";
 
-class RequestAccess extends Component {
+/**
+ * requests access for specific user.
+ * sends mqtt request for topic requestNewAccess.
+ * then updates the database for that room,
+ * saving the fact that they have requested access for a room.
+ */
+class UserRequestAccess extends Component {
   constructor(props) {
     super(props);
     this.requestAccessClick = this.requestAccessClick.bind(this);
   }
 
+  /**
+   * gets roomId from textfield, then userId and email from the
+   * currently logged in user.
+   * sends a request via mqtt and saves the request form to the
+   * firebase database.
+   */
   async requestAccessClick() {
     const roomId = document.getElementById('req-room').value;
 
@@ -23,9 +34,11 @@ class RequestAccess extends Component {
     const { mqtt } = this.props;
 
     const message = roomId + ":" + userId + ":" + email;
+    // sends message to mqtt
     await mqtt.publish(topic, message);
 
     let reqForms;
+    // checks if request has already been made
     await Firebase.database().ref('rooms/' + roomId + "/reqForms").once('value')
     .then(snapshot => {
       reqForms = snapshot.val() || [];
@@ -35,6 +48,7 @@ class RequestAccess extends Component {
       reqForms.push(userId);
     }
 
+    // updates the request form for said room.
     Firebase.database().ref('rooms/' + roomId).update({
       reqForms,
     }, error => {
@@ -52,24 +66,12 @@ class RequestAccess extends Component {
         <h3>Request Access</h3>
 
         <form>
-          {/* <TextField
-            id="req-user"
-            label="User"
-            margin="normal"
-            variant="outlined"
-          /> */}
           <TextField
             id="req-room"
             label="Room"
             margin="normal"
             variant="outlined"
           />
-          {/* <TextField
-            id="req-email"
-            label="Email"
-            margin="normal"
-            variant="outlined"
-          /> */}
         </form>
 
         <p>{this.props.data}</p>
@@ -84,4 +86,4 @@ class RequestAccess extends Component {
 
 export default subscribe({
   topic,
-})(RequestAccess);
+})(UserRequestAccess);
