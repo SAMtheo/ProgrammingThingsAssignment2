@@ -15,16 +15,13 @@ const styles = {
     root: {
         flexGrow: 1,
     },
-    grow: {
-        flexGrow: 1,
-    },
     rightToolbar: {
         marginLeft: 'auto',
         marginRight: -12,
     },
-    menuButton: {
+    leftToolbar: {
         marginLeft: -12,
-        marginRight: 20,
+        marginRight: 'auto',
     },
 };
 
@@ -63,7 +60,7 @@ class MenuAppBar extends React.Component {
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
-                        <div>
+                        <div className={classes.leftToolbar}>
                             <Button
                                 aria-owns={anchorEl ? 'view-choices' : undefined}
                                 aria-haspopup="true"
