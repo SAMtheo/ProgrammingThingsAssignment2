@@ -7,6 +7,9 @@ import { subscribe } from 'mqtt-react';
 
 const topic = "removeAccess"
 
+/**
+ * Component for removing a specific user from the room a room admin has control over.
+ */
 class RemoveAccess extends Component {
   constructor(props) {
     super(props);
@@ -16,9 +19,14 @@ class RemoveAccess extends Component {
 
   componentWillUnmount() {
     const { mqtt } = this.props;
+
+    // Closes the MQTT connection.
     mqtt.end(true);
   }
 
+  /**
+   * Takes the inputted userID and constructs a message containing it and the roomID to publish with MQTT.
+   */
   async removeAccessClick() {
     const userID = document.getElementById('removeAccess-user').value;
     const roomID = this.props.roomNumber;
