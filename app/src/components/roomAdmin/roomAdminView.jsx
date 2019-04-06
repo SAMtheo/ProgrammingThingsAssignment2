@@ -8,13 +8,21 @@ import { Connector } from 'mqtt-react';
 import {
   Grid,
 } from '@material-ui/core';
-import Firebase from 'firebase';
 
+/**
+ * IP for local MQTT requests.
+ * @type {string}
+ */
 const ip = "mqtt://100.68.110.31:9001";
 
+/**
+ * View component containing room admin specific components.
+ */
 class RoomAdminView extends Component {
   constructor(props) {
     super(props);
+
+    // Test data for request forms.
     this.state = {
       requestForms: [
         "samtheo",
@@ -24,6 +32,7 @@ class RoomAdminView extends Component {
   }
 
   async componentWillMount() {
+    // Filter out invalid userIDs
     const reqForms = this.props.rooms[this.props.user.roomNumber].reqForms.filter(userId => (userId !== null));
     this.setState({ requestForms: reqForms });
   }

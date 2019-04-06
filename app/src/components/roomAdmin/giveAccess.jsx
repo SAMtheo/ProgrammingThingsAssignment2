@@ -7,6 +7,9 @@ import { subscribe } from 'mqtt-react';
 
 const topic = "giveAccess";
 
+/**
+ * Component for giving access to a specific user to the room admin's assigned room.
+ */
 class GiveAccess extends Component {
   constructor(props) {
     super(props);
@@ -16,14 +19,21 @@ class GiveAccess extends Component {
 
   componentWillUnmount() {
     const { mqtt } = this.props;
+
+    // Closes the MQTT connection
     mqtt.end(true);
   }
 
+  /**
+   * Publishes the request to the subscribed topic with both roomID and inputted userID.
+   */
   async giveAccessClick() {
     const roomID = this.props.roomNumber;
     const userID = document.getElementById('giveAccess-user').value;
     const message = roomID + ":" + userID;
     const { mqtt } = this.props;
+
+    // Publish the request
     await mqtt.publish(topic, message);
   }
 

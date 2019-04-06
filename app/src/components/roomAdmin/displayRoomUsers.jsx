@@ -7,20 +7,32 @@ import { subscribe } from 'mqtt-react';
 
 const topic = "getUsersDoor";
 
+/**
+ * Component for displaying all users in the room a room admin owns.
+ */
 class DisplayRoomUsers extends Component {
   constructor(props) {
     super(props);
+
+    // Updated when list is retrieved.
     this.state = {
       userList: [],
     };
+
     this.getUsers = this.getUsers.bind(this);
   }
 
   componentWillUnmount() {
     const { mqtt } = this.props;
+
+    // Close MQTT connection
     mqtt.end(true);
   }
 
+  /**
+   * Called before the component's state changes, will set the user list to what was recieved through MQTT.
+   * @param newProps
+   */
   componentWillUpdate(newProps) {
     if (newProps != this.props) {
       if (newProps.data != null) {
@@ -34,6 +46,10 @@ class DisplayRoomUsers extends Component {
     }
   }
 
+  /**
+   * Send request through MQTT to the subscribed topic - gets the users.
+   * @returns {Promise<void>}
+   */
   async getUsers() {
     const { mqtt } = this.props;
     await mqtt.publish(topic, this.props.roomNumber);

@@ -7,6 +7,9 @@ import '../../styles/checkAccessExists.css';
 
 const topic = "checkAccess";
 
+/**
+ * Component for checking a user's access to the room a room admin has access to.
+ */
 class CheckAccessExists extends Component {
   constructor(props) {
     super(props);
@@ -14,16 +17,24 @@ class CheckAccessExists extends Component {
     this.checkAccessClick = this.checkAccessClick.bind(this);
   }
 
+
   componentWillUnmount() {
     const { mqtt } = this.props;
+
+    // Closes connection
     mqtt.end(true);
   }
 
+  /**
+   * Takes the inputted userID and constructs a message containing it and the roomID to publish with MQTT.
+   */
   async checkAccessClick() {
     const userID = document.getElementById('check-user').value;
     const roomID = this.props.roomNumber;
     const message = roomID + ":" + userID;
     const { mqtt } = this.props;
+
+    // Publish to topic
     await mqtt.publish(topic, message);
   }
 
