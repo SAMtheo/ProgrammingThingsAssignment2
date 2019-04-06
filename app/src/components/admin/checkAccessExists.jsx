@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import {
-  Button, TextField
-} from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 import { subscribe } from 'mqtt-react';
 import '../../styles/checkAccessExists.css';
 
+// topic for mqtt publish and subscribe
 const topic = "checkAccess";
 
+/**
+ * checks if a user exists within supplied room.
+ */
 class CheckAccessExists extends Component {
   constructor(props) {
     super(props);
@@ -14,11 +16,17 @@ class CheckAccessExists extends Component {
     this.checkAccessClick = this.checkAccessClick.bind(this);
   }
 
+  /**
+   * unmounts mqtt when component is destroyed.
+   */
   componentWillUnmount() {
     const { mqtt } = this.props;
     mqtt.end(true);
   }
 
+  /**
+   * sends mqtt request with details taken from text fields.
+   */
   async checkAccessClick() {
     const userID = document.getElementById('check-user').value;
     const roomID = document.getElementById('check-room').value;    
@@ -57,6 +65,9 @@ class CheckAccessExists extends Component {
   }
 }
 
+/**
+ * subscribes to the topic to see response
+ */
 export default subscribe({
   topic,
 })(CheckAccessExists);

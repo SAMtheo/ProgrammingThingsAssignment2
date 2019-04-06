@@ -19,6 +19,7 @@ class Homepage extends Component {
     this.state = {
       loading: true,
       user: { permission: "user" },
+      ip: "mqtt://100.68.110.31:9001",
     };
     this.renderPermissionView = this.renderPermissionView.bind(this);
   }
@@ -56,7 +57,7 @@ class Homepage extends Component {
     switch (this.state.user.permission) {
       case "super": {
         return (
-          <AdminView user={this.state.user} />
+          <AdminView ip={this.state.ip} user={this.state.user} />
         );
       }
       case "roomAdmin": {

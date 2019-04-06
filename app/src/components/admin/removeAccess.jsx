@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import {
-  Button, TextField,
-} from '@material-ui/core';
-import '../../styles/removeAccess.css';
+import { Button, TextField } from '@material-ui/core';
 import { subscribe } from 'mqtt-react';
+import '../../styles/removeAccess.css';
 
+// topic for mqtt subscribe and publish
 const topic = "removeAccess"
 
+/**
+ * removes access for requested user and room.
+ */
 class RemoveAccess extends Component {
   constructor(props) {
     super(props);
@@ -14,11 +16,18 @@ class RemoveAccess extends Component {
     this.removeAccessClick = this.removeAccessClick.bind(this);
   }
 
+  /**
+   * unmounts mqtt when componnet is destroyed
+   */
   componentWillUnmount() {
     const { mqtt } = this.props;
     mqtt.end(true);
   }
 
+  /**
+   * sends mqtt request to remove user from room.
+   * user and room are taken from textfields.
+   */
   async removeAccessClick() {
     const userID = document.getElementById('removeAccess-user').value;
     const roomID = document.getElementById('removeAccess-room').value;

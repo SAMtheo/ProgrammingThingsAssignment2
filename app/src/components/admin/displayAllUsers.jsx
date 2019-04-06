@@ -5,8 +5,12 @@ import {
 import '../../styles/displayAllUsers.css';
 import { subscribe } from 'mqtt-react';
 
+// topic for mqtt subscription and publish
 const topic = "getUsers";
 
+/**
+ * displays all users that are declared in the server.
+ */
 class DispalyAllUsers extends Component {
   constructor(props) {
     super(props);
@@ -16,11 +20,18 @@ class DispalyAllUsers extends Component {
     this.getUsers = this.getUsers.bind(this);
   }
 
+  /**
+   * unmounts mqtt when component is destroyed.
+   */
   componentWillUnmount() {
     const { mqtt } = this.props;
     mqtt.end(true);
   }
 
+  /**
+   * updates state is newprops is different and
+   * data is not null.
+   */
   componentWillUpdate(newProps) {
     if (newProps != this.props) {
       if (newProps.data != null) {
@@ -34,6 +45,9 @@ class DispalyAllUsers extends Component {
     }
   }
 
+  /**
+   * gets all users from server
+   */
   async getUsers() {
     const { mqtt } = this.props;
     await mqtt.publish(topic, "get");

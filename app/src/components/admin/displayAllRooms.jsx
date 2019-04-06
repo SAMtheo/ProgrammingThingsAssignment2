@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import {
-  Grid, Button,
-} from '@material-ui/core';
-import '../../styles/displayAllRooms.css';
+import { Grid, Button } from '@material-ui/core';
 import { subscribe } from 'mqtt-react';
+import '../../styles/displayAllRooms.css';
 
+// topic for mqtt subscription and publish
 const topic = "getRooms";
 
+/**
+ * displays all available rooms from the server.
+ */
 class DisplayAllRooms extends Component {
   constructor(props) {
     super(props);
@@ -16,11 +18,18 @@ class DisplayAllRooms extends Component {
     this.getTables = this.getTables.bind(this);
   }
 
+  /**
+   * unmounts mqtt when component is destroyed
+   */
   componentWillUnmount() {
     const { mqtt } = this.props;
     mqtt.end(true);
   }
 
+  /**
+   * when component is updated, only change state if the new
+   * props are different and the data is not null.
+   */
   componentWillUpdate(newProps) {
     if (newProps != this.props) {
       if (newProps.data != null) {
@@ -34,6 +43,9 @@ class DisplayAllRooms extends Component {
     }
   }
 
+  /**
+   * gets list of tables from mqtt.
+   */
   async getTables() {
     const { mqtt } = this.props;
     await mqtt.publish(topic, "get");
