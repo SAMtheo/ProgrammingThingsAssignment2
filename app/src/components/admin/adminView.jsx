@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
+import { Connector } from 'mqtt-react';
+import { Grid } from '@material-ui/core';
 import GiveAccess from './giveAccess.jsx';
 import RemoveAccess from './removeAccess.jsx';
 import CheckAccessExists from './checkAccessExists.jsx';
 import DisplayAllRooms from './displayAllRooms.jsx';
 import DisplayAllUsers from './displayAllUsers.jsx';
-import { Connector } from 'mqtt-react';
-import {
-  Grid,
-} from '@material-ui/core';
 
-const ip = "mqtt://100.68.110.31:9001";
-
+/**
+ * admin view for application.
+ * Shows all functions that they can see. 
+ * these functions are not restricted to roomNumber
+ * or userId.
+ */
 class AdminView extends Component {
   constructor(props) {
     super(props);
@@ -27,27 +29,27 @@ class AdminView extends Component {
             </div>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Connector mqttProps={ip}>
+            <Connector mqttProps={this.props.ip}>
               <DisplayAllRooms />
             </Connector>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Connector mqttProps={ip}>
+            <Connector mqttProps={this.props.ip}>
               <DisplayAllUsers />
             </Connector>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Connector mqttProps={ip}>
+            <Connector mqttProps={this.props.ip}>
               <GiveAccess />
             </Connector>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Connector mqttProps={ip}>
-              <RemoveAccess roomNumber="0001" userNumber="80099E1C" />
+            <Connector mqttProps={this.props.ip}>
+              <RemoveAccess />
             </Connector>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Connector mqttProps={ip}>
+            <Connector mqttProps={this.props.ip}>
               <CheckAccessExists />
             </Connector>
           </Grid>
