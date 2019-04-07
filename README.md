@@ -2,7 +2,7 @@
 
 ### Project Title
 High security access management system
-Project Description
+### Project Description
 An access management system that allows users to request access to a specific resource, be it a locked room, or expensive equipment. A graphical display of access management which covers all workflows. E.g. requesting access, approving access, sending email clarification, denying access and removing access etc… The project will be a ‘proof of concept’ application, to simulate access within a workforce. 
 ### Project implementation
 We will use Arduinos with RFID scanners to simulate locked doors or cabinets for equipment.
